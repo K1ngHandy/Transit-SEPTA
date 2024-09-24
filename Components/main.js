@@ -1,36 +1,44 @@
-export function main () {
-    const mainContainer = document.createElement('div');
-    mainContainer.classList.add('main-container');
+import { navItems } from "../Data/nav-items.js";
+// require('dotenv').config();
+// const url = process.env.URL;
+
+export function main(selector) {
+    const main = document.querySelector(selector);
+
+    const heading = document.createElement('h1');
+    // set heading
+    navItems.forEach(item => {
+        if (window.location.pathname.includes(item.href)) {
+            heading.innerText = `${item.title}`;
+        } else {
+            console.log('Path null');
+        }
+    });
     
     const topSection = document.createElement('hr');
     const bottomSection = document.createElement('hr');
-
-    const heading = document.createElement('h1');
-    heading.textContent = "Transit Schedules";
     
     const mainSection = document.createElement('section');
-    mainSection.append(heading);
-    mainContainer.append(topSection, mainSection, bottomSection);
+    mainSection.innerHTML = `
+        <gmp-map center="40.08871841430664,-75.3934097290039" zoom="14" map-id="DEMO_MAP_ID">
+            <gmp-advanced-marker position="40.08871841430664,-75.3934097290039" title="My location"></gmp-advanced-marker>
+        </gmp-map>`;
+    // mainSection.append(heading);
+    main.append(heading, topSection, mainSection, bottomSection);
 
-    async function trainView() {
-        try {
-            const response = await fetch('https://overpass-api.de/api/interpreter');
-            if (!response.ok) {
-                throw new Error(`Error! Status: ${response.status}`);
-            }
-            const data = await response.json();
-            console.log(data);
+    // async function mapView() {
+    //     try {
+    //         const response = await fetch(url);
+    //         if (!response.ok) {
+    //             throw new Error(`Error! Status: ${response.status}`);
+    //         }
+    //         const data = await response.json();
+    //         console.log(data);
+    //     } catch (error) {
+    //         console.error('Error fetching map data:', error);
+    //     }
+    // }
+    // mapView();
 
-            // data.forEach(train => {
-            //     const trainInfo = document.createElement('p');
-            //     trainInfo.textContent = `Train #${train.trainno}: ${train.status}`;
-            //     mainSection.append(trainInfo);
-            // })
-        } catch (error) {
-            console.error('Error fetching train data:', error);
-        }
-    }
-    trainView();
-
-    return mainContainer;
+    return main;
 }

@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Realtime</title>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&callback=console.debug&libraries=maps,marker&v=beta"></script>
     <link rel="stylesheet" href="/styles.css"></link>
 </head>
 <body>
-    <nav id="nav-placeholder"></nav>
-    <main id="main-placeholder"></main>
-    <footer id="footer-placeholder"></footer>
+    <nav id="nav"></nav>
+    <main id="main">
+        <gmp-map center="40.08871841430664,-75.3934097290039" zoom="14" map-id="DEMO_MAP_ID">
+            <gmp-advanced-marker position="40.08871841430664,-75.3934097290039" title="My location"></gmp-advanced-marker>
+        </gmp-map>
+    </main>
+    <footer id="footer"></footer>
     
     <script src="/script.js" type="module"></script>
 </body>
