@@ -1,39 +1,44 @@
-import { navItems } from "../Data/nav-items.js";
+import { navItems } from '../Data/nav-items.js';
 
 export function nav(selector) {
-    const nav = document.querySelector(selector);
+	const nav = document.querySelector(selector);
 
-    const heading = document.createElement('h2');
-    heading.textContent = "SEPTA";
+	const menuToggle = document.createElement('button');
+	menuToggle.type = 'button';
+	menuToggle.innerHTML = '&#9776;';
+	menuToggle.classList.add('menu-toggle');
+	menuToggle.setAttribute('aria-label', 'Menu');
+	menuToggle.setAttribute('aria-expanded', 'false');
 
-    const menuToggle = document.createElement('div');
-    menuToggle.innerHTML = '&#9776;';
-    menuToggle.classList.add('menu-toggle');
-    menuToggle.setAttribute('title', 'Menu');
+	const heading = document.createElement('h2');
+	heading.textContent = 'SEPTA';
 
-    menuToggle.addEventListener('click', (event) => {
-        if (event) {
-            navList.classList.toggle('active')
-        };
-    });
+	menuToggle.addEventListener('click', (event) => {
+		if (!event) {
+			return;
+		}
 
-    const navList = document.createElement('ul');
-    navList.classList.add('nav-list');
+		const isExpanded = navList.classList.toggle('active');
+		menuToggle.setAttribute('aria-expanded', String(isExpanded));
+	});
 
-    navItems.forEach(item => {
-        const listItem = document.createElement('li');
-        listItem.classList.add('nav-item');
-        listItem.setAttribute('title', item.title);
+	const navList = document.createElement('ul');
+	navList.classList.add('nav-list');
 
-        const link = document.createElement('a');
-        link.href = item.href;
-        link.textContent = item.title;
+	navItems.forEach((item) => {
+		const listItem = document.createElement('li');
+		listItem.classList.add('nav-item');
+		listItem.setAttribute('title', item.title);
 
-        listItem.appendChild(link);
-        navList.appendChild(listItem);
-    })
+		const link = document.createElement('a');
+		link.href = item.href;
+		link.textContent = item.title;
 
-    nav.append(heading, menuToggle, navList);
+		listItem.appendChild(link);
+		navList.appendChild(listItem);
+	});
 
-    return nav;
+	nav.append(menuToggle, heading, navList);
+
+	return nav;
 }
