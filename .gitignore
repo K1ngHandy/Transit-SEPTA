@@ -18,3 +18,7 @@ yarn-error.log*
 
 # OS/editor files
 .DS_Store
+
+# VSCode
+.vscode/
+*.code-workspace
